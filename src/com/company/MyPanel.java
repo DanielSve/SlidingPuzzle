@@ -4,100 +4,113 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Random;
 
 public class MyPanel extends JPanel implements ActionListener {
 
-        ArrayList<MyButton> buttons;
-        ButtonGenerator buttonGenerator;
-        int clicked = 0;
-        int empty = 0;
-        JButton clickedButton;
-        boolean swappable;
+    int baseSize = 4;
+    int rows = baseSize;
+    int columns = baseSize;
+    int boardSize = rows * columns;
 
-    public MyPanel(){
-        setLayout(new GridLayout(4,4));
-        buttonGenerator = new ButtonGenerator(this);
-        buttons = buttonGenerator.getButtonList();
-        Collections.shuffle(buttons);
+    MyButton[][] buttons;
+    ButtonGenerator buttonGenerator;
+    JButton clickedButton;
+    boolean swappable;
 
-        for (int i = 0; i < buttons.size(); i++) {
-            add(buttons.get(i));
+    public MyPanel() {
+        setLayout(new GridLayout(rows,columns));
+        buttonGenerator = new ButtonGenerator(baseSize,this);
+        buttons = buttonGenerator.getButtons();
+        shuffleButtons();
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                add(buttons[i][j]);
+            }
         }
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        clicked = 0;
         swappable = false;
         clickedButton = (JButton) e.getSource();
-        findEmpty();
-        swapIfPossible();
+        findClickedAndEmpty();
         addButtonsWithNewLocations();
         revalidate();
-        if(isCorrect()){
+        if (isCorrect()) {
             System.out.println("TRUE");
         }
     }
-
-    public boolean isCorrect (){
-        int counter = 0;
-        for (int i = 0; i <buttons.size() ; i++) {
-            if (buttons.get(i).getText().equals(Integer.toString(i+1))){
-                counter++;
+    public void shuffleButtons() {
+        Random rnd = new Random();
+        for (int i = baseSize-1; i > 1; i--) {
+            for (int j = baseSize-1; j > 1; j--) {
+                swapPlace(rnd.nextInt(j), rnd.nextInt(i), baseSize-1, rnd.nextInt(i));
+                swapPlace(baseSize-1, baseSize-1, rnd.nextInt(j), rnd.nextInt(i));
             }
         }
-        if(buttons.get(15).getText().equals("")){
+    }
+    public boolean isCorrect (){
+        int counter = 0;
+        int compare = 1;
+        for (int i = 0; i < rows ; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (buttons[i][j].getText().equals(Integer.toString(compare))){
+                    counter++;
+                    compare++;
+                }
+            }
+        }
+        if(buttons[rows-1][columns-1].getText().equals("")){
             counter++;
         }
         System.out.println(counter);
-        return counter == 16;
+        return counter == boardSize;
     }
-
-    public void checkSwappable() {
-
-        if (clicked == 1 || clicked == 2 || clicked == 5 || clicked == 6 || clicked == 9 || clicked == 10 || clicked == 13
-                || clicked == 14) {
-            if (empty == clicked - 1 || empty == clicked + 1 || empty == clicked - 4 || empty == clicked + 4) {
-                swappable = true;
-            }
-        } else if (clicked == 0 || clicked == 4 || clicked == 8 || clicked == 12) {
-            if (empty == clicked + 1 || empty == clicked - 4 || empty == clicked + 4) {
-                swappable = true;
-            }
-        } else if (clicked == 3 || clicked == 7 || clicked == 11 || clicked == 15) {
-            if (empty == clicked - 1 || empty == clicked - 4 || empty == clicked + 4) {
-                swappable = true;
-            }
+    public void checkSwappable(int i, int j, int x, int y) {
+        if (x == i && y == j - 1 || x == i && y == j + 1 || x == i - 1 && y == j || x == i + 1 && y == j) {
+            swappable = true;
         } else {
             swappable = false;
         }
     }
-
-    public void findEmpty(){
-        for (int j = 0; j <buttons.size() ; j++) {
-            if(buttons.get(j).getText().equals("")){
-                empty = j;
-                System.out.println( "EMPTY" + j);
-            }
-        }
-    }
-    public void swapIfPossible(){
-        for (int i = 0; i < buttons.size() ; i++) {
-            if (clickedButton == buttons.get(i)) {
-                clicked = i;
-                checkSwappable();
-                if (swappable) {
-                    Collections.swap(buttons, i, empty);
+    public void findClickedAndEmpty() {
+        int rowA = 0; int colA = 0; int rowB = 0; int colB = 0;
+        for (int i = 0; i < rows ; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (clickedButton == buttons[i][j]) {
+                    rowA = i;
+                    colA = j;
+                    break;
                 }
             }
         }
+        for (int x = 0; x <rows ; x++) {
+            for (int y = 0; y <columns ; y++) {
+                if (buttons[x][y].getText().equals("")){
+                    rowB = x;
+                    colB = y;
+                    break;
+                }
+            }
+        }
+        System.out.println("Bricka 1: "+rowA+", "+colA+"\n\nBricka 2: "+rowB+", "+colB);
+        checkSwappable(rowA,colA,rowB,colB);
+        if (swappable) {
+            swapPlace(rowA,colA,rowB,colB);
+        }
     }
-
+    public void swapPlace(int i, int j, int x, int y) {
+        MyButton temp = buttons[i][j];
+        buttons[i][j] = buttons[x][y];
+        buttons[x][y] = temp;
+        revalidate();
+    }
     public void addButtonsWithNewLocations(){
-        for (int i = 0; i < buttons.size(); i++) {
-            add(buttons.get(i));
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                add(buttons[i][j]);
+            }
         }
     }
 }
