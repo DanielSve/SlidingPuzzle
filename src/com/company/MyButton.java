@@ -22,4 +22,8 @@ public class MyButton extends JButton {
         this.setText(""+nr);
         this.addActionListener(a);
     }
+
+    public int getNr() {
+        return nr;
+    }
 }

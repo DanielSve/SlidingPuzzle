@@ -19,8 +19,8 @@ public class MyPanel extends JPanel implements ActionListener {
     boolean swappable;
 
     public MyPanel() {
-        setLayout(new GridLayout(rows,columns));
-        buttonGenerator = new ButtonGenerator(baseSize,this);
+        setLayout(new GridLayout(rows, columns));
+        buttonGenerator = new ButtonGenerator(baseSize, this);
         buttons = buttonGenerator.getButtons();
         shuffleButtons();
 
@@ -43,14 +43,28 @@ public class MyPanel extends JPanel implements ActionListener {
     }
     public void shuffleButtons() {
         Random rnd = new Random();
-        for (int i = baseSize-1; i > 1; i--) {
-            for (int j = baseSize-1; j > 1; j--) {
-                swapPlace(rnd.nextInt(j), rnd.nextInt(i), baseSize-1, rnd.nextInt(i));
-                swapPlace(baseSize-1, baseSize-1, rnd.nextInt(j), rnd.nextInt(i));
+        do {
+            for (int i = baseSize - 1; i > 1; i--) {
+                for (int j = baseSize - 1; j > 1; j--) {
+                    swapPlace(rnd.nextInt(j), rnd.nextInt(i), baseSize - 1, rnd.nextInt(i));
+                    swapPlace(baseSize - 1, baseSize - 1, rnd.nextInt(j), rnd.nextInt(i));
+                }
+            }
+        } while (!isSolvable());
+    }
+    // This method was inspired by Geeks for Geeks but does not work for 4+ games
+    public boolean isSolvable() {
+        int invCount = 0;
+        for (int i = 0; i < rows - 1; i++) {
+            for (int j = i + 1; j < columns; j++) {
+                if (buttons[j][i].getNr() > 0 && buttons[j][i].getNr() > buttons[i][j].getNr()) {
+                    invCount++;
+                }
             }
         }
+        return (invCount % 2 == 0);
     }
-    public boolean isCorrect (){
+    public boolean isCorrect() {
         int counter = 0;
         int compare = 1;
         for (int i = 0; i < rows ; i++) {
