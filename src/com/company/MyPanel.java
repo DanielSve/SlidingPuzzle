@@ -94,7 +94,6 @@ public class MyPanel extends JPanel implements ActionListener {
                 }
             }
         }
-        System.out.println("Bricka 1: "+rowA+", "+colA+"\n\nBricka 2: "+rowB+", "+colB);
         checkSwappable(rowA,colA,rowB,colB);
         if (swappable) {
             swapPlace(rowA,colA,rowB,colB);
