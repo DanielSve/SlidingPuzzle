@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class MyPanel extends JPanel implements ActionListener {
+public class GamePanel extends JPanel implements ActionListener {
 
     int baseSize = 4;
     int rows = baseSize;
@@ -18,17 +18,8 @@ public class MyPanel extends JPanel implements ActionListener {
     JButton clickedButton;
     boolean swappable;
 
-    public MyPanel() {
-        setLayout(new GridLayout(rows, columns));
-        buttonGenerator = new ButtonGenerator(baseSize, this);
-        buttons = buttonGenerator.getButtons();
-        shuffleButtons();
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                add(buttons[i][j]);
-            }
-        }
+    public GamePanel() {
+        newGame();
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -38,7 +29,35 @@ public class MyPanel extends JPanel implements ActionListener {
         addButtonsWithNewLocations();
         revalidate();
         if (isCorrect()) {
-            System.out.println("TRUE");
+            int choice = JOptionPane.showConfirmDialog(null,"Congratulations! New Game?","You won!",JOptionPane.YES_NO_OPTION);
+            if (choice == 0) {
+                removeAll();
+                revalidate();
+                newGame();
+            } else {
+                int exit = JOptionPane.showConfirmDialog(null,"Exit Game?","Exit?",JOptionPane.YES_NO_OPTION);
+                if (exit == 1) {
+                    removeAll();
+                    revalidate();
+                    newGame();
+                } else {
+                    System.exit(0);
+                }
+            }
+            swappable = false;
+        }
+    }
+    public void newGame() {
+
+        setLayout(new GridLayout(rows, columns));
+        buttonGenerator = new ButtonGenerator(baseSize, this);
+        buttons = buttonGenerator.getButtons();
+        shuffleButtons();
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                add(buttons[i][j]);
+            }
         }
     }
     public void shuffleButtons() {
@@ -54,7 +73,11 @@ public class MyPanel extends JPanel implements ActionListener {
     }
     // This method was inspired by Geeks for Geeks but does not work for 4+ games
     public boolean isSolvable() {
-        int invCount = 0;
+        if (baseSize < 3) {
+            swapPlace(0, baseSize - 1, 1, 1);
+            return true;
+        } else {
+            int invCount = 0;
         for (int i = 0; i < rows - 1; i++) {
             for (int j = i + 1; j < columns; j++) {
                 if (buttons[j][i].getNr() > 0 && buttons[j][i].getNr() > buttons[i][j].getNr()) {
@@ -63,6 +86,7 @@ public class MyPanel extends JPanel implements ActionListener {
             }
         }
         return (invCount % 2 == 0);
+        }
     }
     public boolean isCorrect() {
         int counter = 0;
@@ -75,10 +99,9 @@ public class MyPanel extends JPanel implements ActionListener {
                 }
             }
         }
-        if(buttons[rows-1][columns-1].getText().equals("")){
+        if (buttons[rows-1][columns-1].getText().equals("")) {
             counter++;
         }
-        System.out.println(counter);
         return counter == boardSize;
     }
     public void checkSwappable(int i, int j, int x, int y) {
@@ -123,6 +146,16 @@ public class MyPanel extends JPanel implements ActionListener {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 add(buttons[i][j]);
+            }
+        }
+    }
+    public void changeColor(Color c1, Color c2){
+        for (int i = 0; i < buttons.length ; i++) {
+            for (int j = 0; j <buttons.length; j++) {
+                buttons[i][j].setBackgroundColor(c1,c2);
+                if (buttons[i][j].getText().equals("")) {
+                    buttons[i][j].setBackground(Color.black);
+                }
             }
         }
     }
