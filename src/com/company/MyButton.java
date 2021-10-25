@@ -8,7 +8,6 @@ public class MyButton extends JButton {
 
     int nr;
 
-
     public MyButton(int nr, ActionListener a, Color c1, Color c2){
         this.nr = nr;
         if (nr % 2 == 0) {

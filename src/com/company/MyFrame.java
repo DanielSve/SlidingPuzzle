@@ -17,7 +17,10 @@ public class MyFrame extends JFrame {
         menuPanel.setNewGameListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("nytt spel!");
+                remove(gamePanel);
+                gamePanel = new GamePanel();
+                add(gamePanel);
+                revalidate();
             }
         });
 

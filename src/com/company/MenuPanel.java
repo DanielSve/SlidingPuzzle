@@ -47,7 +47,7 @@ public class MenuPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == color1 || e.getSource() == color2 || e.getSource() == color3){
             menuListener.actionPerformed(e);
-        } else if(e.getSource()==newGameButton){
+        } else if(e.getSource()==newGameButton) {
             newGameListener.actionPerformed(e);
         }
     }

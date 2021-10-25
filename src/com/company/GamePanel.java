@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    int baseSize = 2;
+    int baseSize = 4;
     int rows = baseSize;
     int columns = baseSize;
     int boardSize = rows * columns;
@@ -19,17 +19,7 @@ public class GamePanel extends JPanel implements ActionListener {
     boolean swappable;
 
     public GamePanel() {
-        setLayout(new GridLayout(rows, columns));
-        buttonGenerator = new ButtonGenerator(baseSize, this);
-        buttons = buttonGenerator.getButtons();
-        shuffleButtons();
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                add(buttons[i][j]);
-            }
-        }
-
+        newGame();
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -39,7 +29,35 @@ public class GamePanel extends JPanel implements ActionListener {
         addButtonsWithNewLocations();
         revalidate();
         if (isCorrect()) {
-            System.out.println("TRUE");
+            int choice = JOptionPane.showConfirmDialog(null,"Congratulations! New Game?","You won!",JOptionPane.YES_NO_OPTION);
+            if (choice == 0) {
+                removeAll();
+                revalidate();
+                newGame();
+            } else {
+                int exit = JOptionPane.showConfirmDialog(null,"Exit Game?","Exit?",JOptionPane.YES_NO_OPTION);
+                if (exit == 1) {
+                    removeAll();
+                    revalidate();
+                    newGame();
+                } else {
+                    System.exit(0);
+                }
+            }
+            swappable = false;
+        }
+    }
+    public void newGame() {
+
+        setLayout(new GridLayout(rows, columns));
+        buttonGenerator = new ButtonGenerator(baseSize, this);
+        buttons = buttonGenerator.getButtons();
+        shuffleButtons();
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                add(buttons[i][j]);
+            }
         }
     }
     public void shuffleButtons() {
@@ -81,10 +99,9 @@ public class GamePanel extends JPanel implements ActionListener {
                 }
             }
         }
-        if(buttons[rows-1][columns-1].getText().equals("")){
+        if (buttons[rows-1][columns-1].getText().equals("")) {
             counter++;
         }
-        System.out.println(counter);
         return counter == boardSize;
     }
     public void checkSwappable(int i, int j, int x, int y) {
@@ -141,6 +158,5 @@ public class GamePanel extends JPanel implements ActionListener {
                 }
             }
         }
-
     }
 }
