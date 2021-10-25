@@ -11,7 +11,7 @@ public class ButtonGenerator {
         int counter = 1;
         for (int i = 0; i < baseSize ; i++) {
             for (int j = 0; j < baseSize; j++) {
-                buttonArray[i][j]=(new MyButton(counter,a));
+                buttonArray[i][j]=(new MyButton(counter,a,Color.yellow,Color.orange));
                 counter++;
             }
         }
@@ -22,4 +22,5 @@ public class ButtonGenerator {
     public MyButton[][] getButtons() {
         return buttonArray;
     }
+
 }
