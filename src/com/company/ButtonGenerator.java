@@ -2,27 +2,24 @@ package com.company;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 
 public class ButtonGenerator {
-        MyButton [] buttonArray;
-        ArrayList<MyButton> buttonList;
+    MyButton [][] buttonArray;
 
-    public ButtonGenerator(ActionListener a){
-        buttonArray = new MyButton[16];
-
-        for (int i = 0; i < buttonArray.length ; i++) {
-            buttonArray[i]=(new MyButton("" +(i+1),a));
+    public ButtonGenerator(int baseSize, ActionListener a){
+        buttonArray = new MyButton[baseSize][baseSize];
+        int counter = 1;
+        for (int i = 0; i < baseSize ; i++) {
+            for (int j = 0; j < baseSize; j++) {
+                buttonArray[i][j]=(new MyButton(counter,a));
+                counter++;
+            }
         }
-        buttonArray[15].setText("");
-        buttonArray[15].setBackground(Color.black);
-        buttonList = new ArrayList(Arrays.asList(buttonArray));
+        buttonArray[baseSize-1][baseSize-1].setText("");
+        buttonArray[baseSize-1][baseSize-1].setBackground(Color.black);
     }
 
-    public ArrayList<MyButton> getButtonList() {
-        return buttonList;
+    public MyButton[][] getButtons() {
+        return buttonArray;
     }
-
 }
