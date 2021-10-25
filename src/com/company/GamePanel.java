@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class MyPanel extends JPanel implements ActionListener {
+public class GamePanel extends JPanel implements ActionListener {
 
     int baseSize = 2;
     int rows = baseSize;
@@ -18,7 +18,7 @@ public class MyPanel extends JPanel implements ActionListener {
     JButton clickedButton;
     boolean swappable;
 
-    public MyPanel() {
+    public GamePanel() {
         setLayout(new GridLayout(rows, columns));
         buttonGenerator = new ButtonGenerator(baseSize, this);
         buttons = buttonGenerator.getButtons();
@@ -29,6 +29,7 @@ public class MyPanel extends JPanel implements ActionListener {
                 add(buttons[i][j]);
             }
         }
+
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -130,5 +131,16 @@ public class MyPanel extends JPanel implements ActionListener {
                 add(buttons[i][j]);
             }
         }
+    }
+    public void changeColor(Color c1, Color c2){
+        for (int i = 0; i < buttons.length ; i++) {
+            for (int j = 0; j <buttons.length; j++) {
+                buttons[i][j].setBackgroundColor(c1,c2);
+                if (buttons[i][j].getText().equals("")) {
+                    buttons[i][j].setBackground(Color.black);
+                }
+            }
+        }
+
     }
 }
