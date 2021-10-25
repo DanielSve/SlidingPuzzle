@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class MyPanel extends JPanel implements ActionListener {
 
-    int baseSize = 4;
+    int baseSize = 2;
     int rows = baseSize;
     int columns = baseSize;
     int boardSize = rows * columns;
@@ -54,7 +54,11 @@ public class MyPanel extends JPanel implements ActionListener {
     }
     // This method was inspired by Geeks for Geeks but does not work for 4+ games
     public boolean isSolvable() {
-        int invCount = 0;
+        if (baseSize < 3) {
+            swapPlace(0, baseSize - 1, 1, 1);
+            return true;
+        } else {
+            int invCount = 0;
         for (int i = 0; i < rows - 1; i++) {
             for (int j = i + 1; j < columns; j++) {
                 if (buttons[j][i].getNr() > 0 && buttons[j][i].getNr() > buttons[i][j].getNr()) {
@@ -63,6 +67,7 @@ public class MyPanel extends JPanel implements ActionListener {
             }
         }
         return (invCount % 2 == 0);
+        }
     }
     public boolean isCorrect() {
         int counter = 0;
