@@ -6,17 +6,18 @@ import java.awt.event.ActionListener;
 public class ButtonGenerator {
     MyButton [][] buttonArray;
 
-    public ButtonGenerator(int baseSize, ActionListener a){
-        buttonArray = new MyButton[baseSize][baseSize];
+    public ButtonGenerator(int rows, int columns, ActionListener a){
+        buttonArray = new MyButton[rows][columns];
+        int baseSize = rows * columns;
         int counter = 1;
-        for (int i = 0; i < baseSize ; i++) {
-            for (int j = 0; j < baseSize; j++) {
+        for (int i = 0; i < rows ; i++) {
+            for (int j = 0; j < columns; j++) {
                 buttonArray[i][j]=(new MyButton(counter,a,Color.yellow,Color.orange));
                 counter++;
             }
         }
-        buttonArray[baseSize-1][baseSize-1].setText("");
-        buttonArray[baseSize-1][baseSize-1].setBackground(Color.black);
+        buttonArray[rows-1][columns-1].setText("");
+        buttonArray[rows-1][columns-1].setBackground(Color.black);
     }
 
     public MyButton[][] getButtons() {
