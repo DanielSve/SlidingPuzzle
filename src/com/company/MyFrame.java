@@ -6,19 +6,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MyFrame extends JFrame {
-        GamePanel gamePanel;
-        MenuPanel menuPanel;
+    GamePanel gamePanel;
+    MenuPanel menuPanel;
+    Color colorChoice1 = Color.yellow;
+    Color colorChoice2 = Color.orange;
 
     public MyFrame() {
         setLayout(new BorderLayout());
         menuPanel = new MenuPanel();
-        gamePanel = new GamePanel();
+        gamePanel = new GamePanel(colorChoice1,colorChoice2);
 
         menuPanel.setNewGameListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 remove(gamePanel);
-                gamePanel = new GamePanel();
+                gamePanel = new GamePanel(colorChoice1,colorChoice2);
                 add(gamePanel);
                 revalidate();
             }
@@ -30,15 +32,21 @@ public class MyFrame extends JFrame {
                 Object obj = e.getSource();
                 if(obj==menuPanel.color1){
                     System.out.println("Yellow");
-                    gamePanel.changeColor(Color.yellow, Color.orange);
+                    colorChoice1 = Color.yellow;
+                    colorChoice2 = Color.orange;
+                    gamePanel.changeColor(colorChoice1, colorChoice2);
                 }
                 if(obj==menuPanel.color2){
                     System.out.println("Green");
-                    gamePanel.changeColor(Color.green, Color.white);
+                    colorChoice1 = Color.green;
+                    colorChoice2 = Color.white;
+                    gamePanel.changeColor(colorChoice1, colorChoice2);
                 }
                 if(obj==menuPanel.color3){
                     System.out.println("Blue");
-                    gamePanel.changeColor(Color.blue, Color.cyan);
+                    colorChoice1 = Color.blue;
+                    colorChoice2 = Color.cyan;
+                    gamePanel.changeColor(colorChoice1, colorChoice2);
                 }
             }
         });
