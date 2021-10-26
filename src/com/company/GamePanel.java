@@ -17,9 +17,13 @@ public class GamePanel extends JPanel implements ActionListener {
     ButtonGenerator buttonGenerator;
     JButton clickedButton;
     boolean swappable;
+    Color c1;
+    Color c2;
 
-    public GamePanel() {
-        newGame();
+    public GamePanel(Color colorChoice1, Color colorChoice2) {
+        c1 = colorChoice1;
+        c2 = colorChoice2;
+        newGame(c1,c2);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -33,13 +37,13 @@ public class GamePanel extends JPanel implements ActionListener {
             if (choice == 0) {
                 removeAll();
                 revalidate();
-                newGame();
+                newGame(c1,c2);
             } else {
                 int exit = JOptionPane.showConfirmDialog(null,"Exit Game?","Exit?",JOptionPane.YES_NO_OPTION);
                 if (exit == 1) {
                     removeAll();
                     revalidate();
-                    newGame();
+                    newGame(c1,c2);
                 } else {
                     System.exit(0);
                 }
@@ -47,11 +51,11 @@ public class GamePanel extends JPanel implements ActionListener {
             swappable = false;
         }
     }
-    public void newGame() {
-
+    public void newGame(Color c1, Color c2) {
         setLayout(new GridLayout(rows, columns));
         buttonGenerator = new ButtonGenerator(baseSize, this);
         buttons = buttonGenerator.getButtons();
+        changeColor(c1,c2);
         shuffleButtons();
 
         for (int i = 0; i < rows; i++) {
@@ -78,14 +82,14 @@ public class GamePanel extends JPanel implements ActionListener {
             return true;
         } else {
             int invCount = 0;
-        for (int i = 0; i < rows - 1; i++) {
-            for (int j = i + 1; j < columns; j++) {
-                if (buttons[j][i].getNr() > 0 && buttons[j][i].getNr() > buttons[i][j].getNr()) {
-                    invCount++;
+            for (int i = 0; i < rows - 1; i++) {
+                for (int j = i + 1; j < columns; j++) {
+                    if (buttons[j][i].getNr() > 0 && buttons[j][i].getNr() > buttons[i][j].getNr()) {
+                        invCount++;
+                    }
                 }
             }
-        }
-        return (invCount % 2 == 0);
+            return (invCount % 2 == 0);
         }
     }
     public boolean isCorrect() {
