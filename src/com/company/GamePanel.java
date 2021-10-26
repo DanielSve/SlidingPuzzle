@@ -57,7 +57,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     public void newGame(Color c1, Color c2) {
         setLayout(new GridLayout(rows, columns));
-        buttonGenerator = new ButtonGenerator(baseSize, this);
+        buttonGenerator = new ButtonGenerator(rows,columns, this);
         buttons = buttonGenerator.getButtons();
         changeColor(c1,c2);
         shuffleButtons();
@@ -71,10 +71,10 @@ public class GamePanel extends JPanel implements ActionListener {
     public void shuffleButtons() {
         Random rnd = new Random();
         do {
-            for (int i = baseSize - 1; i > 1; i--) {
-                for (int j = baseSize - 1; j > 1; j--) {
-                    swapPlace(rnd.nextInt(j), rnd.nextInt(i), baseSize - 1, rnd.nextInt(i));
-                    swapPlace(baseSize - 1, baseSize - 1, rnd.nextInt(j), rnd.nextInt(i));
+            for (int i = rows - 1; i > 1; i--) {
+                for (int j = columns - 1; j > 1; j--) {
+                    swapPlace(rnd.nextInt(i), rnd.nextInt(j), rows - 1, rnd.nextInt(j));
+                    swapPlace(rows - 1, columns - 1, rnd.nextInt(i), rnd.nextInt(j));
                 }
             }
         } while (!isSolvable());
@@ -158,8 +158,8 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
     public void changeColor(Color c1, Color c2){
-        for (int i = 0; i < buttons.length ; i++) {
-            for (int j = 0; j <buttons.length; j++) {
+        for (int i = 0; i < rows ; i++) {
+            for (int j = 0; j < columns; j++) {
                 buttons[i][j].setBackgroundColor(c1,c2);
                 if (buttons[i][j].getText().equals("")) {
                     buttons[i][j].setBackground(Color.black);
