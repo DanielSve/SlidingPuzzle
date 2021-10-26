@@ -27,6 +27,10 @@ public class MyButton extends JButton {
         return nr;
     }
 
+    public void setNr(int number) {
+        this.nr = number;
+    }
+
     public void setBackgroundColor(Color c1, Color c2){
         if (nr % 2 == 0) {
             setBackground(c1);
