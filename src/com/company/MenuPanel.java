@@ -6,49 +6,56 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuPanel extends JPanel implements ActionListener {
-    JButton newGameButton;
-    JMenu menu;
-    JMenuBar menuBar;
-    JMenuItem color1, color2, color3;
-    ActionListener newGameListener;
-    ActionListener menuListener;
+    JMenu colorMenu;
+    JMenu newGameMenu;
+    JMenuBar colorMenuBar;
+    JMenuBar newGameMenuBar;
+    MenuItems menuItems = new MenuItems(this);
+    JMenuItem[] colorMenuItems;
+    JMenuItem[] newGameMenuItems;
+    ActionListener newGameMenuListener;
+    ActionListener colorMenuListener;
+
     public MenuPanel(){
         setLayout(new FlowLayout());
-        newGameButton = new JButton("New Game");
-        menu = new JMenu("Change color");
-        menuBar = new JMenuBar();
-        color1 = new JMenuItem("Yellow");
-        color2 = new JMenuItem("Green");
-        color3 = new JMenuItem("Blue");
+        newGameMenu = new JMenu("New Game");
+        colorMenu = new JMenu("Change color");
+        colorMenuBar = new JMenuBar();
+        newGameMenuBar = new JMenuBar();
 
-        menu.add(color1);
-        menu.add(color2);
-        menu.add(color3);
-        menuBar.add(menu);
+        newGameMenuItems = menuItems.getNewGameMenuItems();
+        colorMenuItems = menuItems.getColorMenuItems();
+        System.out.println(colorMenuItems.length);
+        addItemsToMenu(colorMenu, colorMenuItems);
+        addItemsToMenu(newGameMenu, newGameMenuItems);
 
-        color1.addActionListener(this);
-        color2.addActionListener(this);
-        color3.addActionListener(this);
-        newGameButton.addActionListener(this);
+        newGameMenuBar.add(newGameMenu);
+        colorMenuBar.add(colorMenu);
 
-        add(newGameButton);
-        add(menuBar);
+        add(newGameMenuBar);
+        add(colorMenuBar);
     }
 
-    public void setNewGameListener(ActionListener newGameListener) {
-        this.newGameListener = newGameListener;
+    public void setNewGameMenuListener(ActionListener newGameMenuListener) {
+        this.newGameMenuListener = newGameMenuListener;
     }
 
-    public void setMenuListener(ActionListener menuListener) {
-        this.menuListener = menuListener;
+    public void setColorMenuListener(ActionListener colorMenuListener) {
+        this.colorMenuListener = colorMenuListener;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == color1 || e.getSource() == color2 || e.getSource() == color3){
-            menuListener.actionPerformed(e);
-        } else if(e.getSource()==newGameButton) {
-            newGameListener.actionPerformed(e);
+        if(e.getSource() == colorMenu.getItem(0) || e.getSource() == colorMenu.getItem(1) || e.getSource() == colorMenu.getItem(2)){
+            colorMenuListener.actionPerformed(e);
+        } else if(e.getSource() == newGameMenu.getItem(0) || e.getSource() == newGameMenu.getItem(1) || e.getSource() == newGameMenu.getItem(2)) {
+            newGameMenuListener.actionPerformed(e);
+        }
+    }
+
+    public void addItemsToMenu(JMenu jMenu, JMenuItem [] jMenuItems){
+        for (int i = 0; i <jMenuItems.length ; i++) {
+            jMenu.add(jMenuItems[i]);
         }
     }
 }
