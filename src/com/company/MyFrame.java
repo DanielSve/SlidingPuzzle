@@ -38,14 +38,14 @@ public class MyFrame extends JFrame {
                 }
                 if(obj==menuPanel.color2){
                     System.out.println("Green");
-                    colorChoice1 = Color.green;
-                    colorChoice2 = Color.white;
+                    colorChoice1 = gamePanel.myGreen1;
+                    colorChoice2 = gamePanel.myGreen2;
                     gamePanel.changeColor(colorChoice1, colorChoice2);
                 }
                 if(obj==menuPanel.color3){
                     System.out.println("Blue");
-                    colorChoice1 = Color.blue;
-                    colorChoice2 = Color.cyan;
+                    colorChoice1 = gamePanel.myBlue1;
+                    colorChoice2 = gamePanel.myBlue2;
                     gamePanel.changeColor(colorChoice1, colorChoice2);
                 }
             }

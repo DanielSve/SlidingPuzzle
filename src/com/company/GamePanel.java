@@ -12,6 +12,10 @@ public class GamePanel extends JPanel implements ActionListener {
     int rows = baseSize;
     int columns = baseSize;
     int boardSize = rows * columns;
+    Color myGreen1 = new Color(212,255,225);
+    Color myGreen2 = new Color(123,189,143);
+    Color myBlue1 = new Color(212,245,255);
+    Color myBlue2 = new Color(115,187,209);
 
     MyButton[][] buttons;
     ButtonGenerator buttonGenerator;
