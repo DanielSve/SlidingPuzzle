@@ -8,10 +8,10 @@ import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    int baseSize = 4;
-    int rows = baseSize;
-    int columns = baseSize;
-    int boardSize = rows * columns;
+    int baseSize;
+    int rows;
+    int columns;
+    int boardSize;
     Color myGreen1 = new Color(212,255,225);
     Color myGreen2 = new Color(123,189,143);
     Color myBlue1 = new Color(212,245,255);
@@ -24,10 +24,10 @@ public class GamePanel extends JPanel implements ActionListener {
     Color c1;
     Color c2;
 
-    public GamePanel(Color colorChoice1, Color colorChoice2) {
+    public GamePanel(int baseSize, Color colorChoice1, Color colorChoice2) {
         c1 = colorChoice1;
         c2 = colorChoice2;
-        newGame(c1,c2);
+        newGame(baseSize, c1,c2);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -41,13 +41,13 @@ public class GamePanel extends JPanel implements ActionListener {
             if (choice == 0) {
                 removeAll();
                 revalidate();
-                newGame(c1,c2);
+                newGame(baseSize,c1,c2);
             } else {
                 int exit = JOptionPane.showConfirmDialog(null,"Exit Game?","Exit?",JOptionPane.YES_NO_OPTION);
                 if (exit == 1) {
                     removeAll();
                     revalidate();
-                    newGame(c1,c2);
+                    newGame(baseSize,c1,c2);
                 } else {
                     System.exit(0);
                 }
@@ -55,7 +55,11 @@ public class GamePanel extends JPanel implements ActionListener {
             swappable = false;
         }
     }
-    public void newGame(Color c1, Color c2) {
+    public void newGame(int baseSize, Color c1, Color c2) {
+        this.baseSize = baseSize;
+        this.rows = baseSize;
+        this.columns = baseSize;
+        this.boardSize = this.rows * this.columns;
         setLayout(new GridLayout(rows, columns));
         buttonGenerator = new ButtonGenerator(rows,columns, this);
         buttons = buttonGenerator.getButtons();

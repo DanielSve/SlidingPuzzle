@@ -8,19 +8,20 @@ import java.awt.event.ActionListener;
 public class MyFrame extends JFrame {
     GamePanel gamePanel;
     MenuPanel menuPanel;
+    int baseSize = 4;
     Color colorChoice1 = Color.yellow;
     Color colorChoice2 = Color.orange;
 
     public MyFrame() {
         setLayout(new BorderLayout());
         menuPanel = new MenuPanel();
-        gamePanel = new GamePanel(colorChoice1,colorChoice2);
+        gamePanel = new GamePanel(baseSize,colorChoice1,colorChoice2);
 
         menuPanel.setNewGameListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 remove(gamePanel);
-                gamePanel = new GamePanel(colorChoice1,colorChoice2);
+                gamePanel = new GamePanel(baseSize,colorChoice1,colorChoice2);
                 add(gamePanel);
                 revalidate();
             }
