@@ -24,9 +24,9 @@ public class GamePanel extends JPanel implements ActionListener {
     Color c1;
     Color c2;
 
-    public GamePanel(int baseSize, Color colorChoice1, Color colorChoice2) {
-        c1 = colorChoice1;
-        c2 = colorChoice2;
+    public GamePanel(int baseSize, Color c1, Color c2) {
+        this.c1 = c1;
+        this.c2 = c2;
         newGame(baseSize, c1,c2);
     }
     @Override
@@ -74,30 +74,18 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     public void shuffleButtons() {
         Random rnd = new Random();
-        do {
-            for (int i = rows - 1; i > 1; i--) {
-                for (int j = columns - 1; j > 1; j--) {
-                    swapPlace(rnd.nextInt(i), rnd.nextInt(j), rows - 1, rnd.nextInt(j));
-                    swapPlace(rows - 1, columns - 1, rnd.nextInt(i), rnd.nextInt(j));
-                }
-            }
-        } while (!isSolvable());
-    }
-    // This method was inspired by Geeks for Geeks but does not work for 4+ games
-    public boolean isSolvable() {
-        if (baseSize < 3) {
-            swapPlace(0, baseSize - 1, 1, 1);
-            return true;
-        } else {
-            int invCount = 0;
-            for (int i = 0; i < rows - 1; i++) {
-                for (int j = i + 1; j < columns; j++) {
-                    if (buttons[j][i].getNr() > 0 && buttons[j][i].getNr() > buttons[i][j].getNr()) {
-                        invCount++;
+        for (int l = 0; l < 1000; l++) {
+            int i = rnd.nextInt(baseSize);
+            int j = rnd.nextInt(baseSize);
+            for (int x = 0; x < rows; x++) {
+                for (int y = 0; y < columns; y++) {
+                    if (buttons[x][y].getText().equals("")) {
+                        if (x == i && y == j - 1 || x == i && y == j + 1 || x == i - 1 && y == j || x == i + 1 && y == j) {
+                            swapPlace(i, j, x, y);
+                        }
                     }
                 }
             }
-            return (invCount % 2 == 0);
         }
     }
     public boolean isCorrect() {
