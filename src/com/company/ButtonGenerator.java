@@ -6,9 +6,8 @@ import java.awt.event.ActionListener;
 public class ButtonGenerator {
     MyButton [][] buttonArray;
 
-    public ButtonGenerator(int rows, int columns, ActionListener a){
+    public ButtonGenerator(int rows, int columns, ActionListener a) {
         buttonArray = new MyButton[rows][columns];
-        int baseSize = rows * columns;
         int counter = 1;
         for (int i = 0; i < rows ; i++) {
             for (int j = 0; j < columns; j++) {
