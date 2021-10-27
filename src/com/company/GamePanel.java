@@ -12,6 +12,7 @@ public class GamePanel extends JPanel implements ActionListener {
     int rows;
     int columns;
     int boardSize;
+    int iToSwap = 0; int jToSwap = 0; int xToSwap = 0; int yToSwap = 0;
     Color myGreen1 = new Color(212,255,225);
     Color myGreen2 = new Color(123,189,143);
     Color myBlue1 = new Color(212,245,255);
@@ -20,7 +21,6 @@ public class GamePanel extends JPanel implements ActionListener {
     MyButton[][] buttons;
     ButtonGenerator buttonGenerator;
     JButton clickedButton;
-    boolean swappable;
     Color c1;
     Color c2;
 
@@ -31,28 +31,14 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        swappable = false;
         clickedButton = (JButton) e.getSource();
-        findClickedAndEmpty();
+        findClicked();
+        findEmpty();
+        swapIfPossible(iToSwap,jToSwap,xToSwap,yToSwap);
         addButtonsWithNewLocations();
         revalidate();
         if (isCorrect()) {
-            int choice = JOptionPane.showConfirmDialog(null,"Congratulations! New Game?","You won!",JOptionPane.YES_NO_OPTION);
-            if (choice == 0) {
-                removeAll();
-                revalidate();
-                newGame(baseSize,c1,c2);
-            } else {
-                int exit = JOptionPane.showConfirmDialog(null,"Exit Game?","Exit?",JOptionPane.YES_NO_OPTION);
-                if (exit == 1) {
-                    removeAll();
-                    revalidate();
-                    newGame(baseSize,c1,c2);
-                } else {
-                    System.exit(0);
-                }
-            }
-            swappable = false;
+            gameWon();
         }
     }
     public void newGame(int baseSize, Color c1, Color c2) {
@@ -80,10 +66,56 @@ public class GamePanel extends JPanel implements ActionListener {
             for (int x = 0; x < rows; x++) {
                 for (int y = 0; y < columns; y++) {
                     if (buttons[x][y].getText().equals("")) {
-                        if (x == i && y == j - 1 || x == i && y == j + 1 || x == i - 1 && y == j || x == i + 1 && y == j) {
-                            swapPlace(i, j, x, y);
-                        }
+                        swapIfPossible(i,j,x,y);
                     }
+                }
+            }
+        }
+    }
+    public void findClicked() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (clickedButton == buttons[i][j]) {
+                    iToSwap = i;
+                    jToSwap = j;
+                    break;
+                }
+            }
+        }
+    }
+    public void findEmpty() {
+        for (int x = 0; x <rows ; x++) {
+            for (int y = 0; y <columns ; y++) {
+                if (buttons[x][y].getText().equals("")){
+                    xToSwap = x;
+                    yToSwap = y;
+                    break;
+                }
+            }
+        }
+    }
+    public void swapIfPossible(int i, int j, int x, int y) {
+        if (x == i && y == j - 1 || x == i && y == j + 1 ||
+                x == i - 1 && y == j || x == i + 1 && y == j) {
+            MyButton temp = buttons[i][j];
+            buttons[i][j] = buttons[x][y];
+            buttons[x][y] = temp;
+            revalidate();
+        }
+    }
+    public void addButtonsWithNewLocations(){
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                add(buttons[i][j]);
+            }
+        }
+    }
+    public void changeColor(Color c1, Color c2){
+        for (int i = 0; i < rows ; i++) {
+            for (int j = 0; j < columns; j++) {
+                buttons[i][j].setBackgroundColor(c1,c2);
+                if (buttons[i][j].getText().equals("")) {
+                    buttons[i][j].setBackground(Color.black);
                 }
             }
         }
@@ -104,58 +136,20 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         return counter == boardSize;
     }
-    public void checkSwappable(int i, int j, int x, int y) {
-        if (x == i && y == j - 1 || x == i && y == j + 1 || x == i - 1 && y == j || x == i + 1 && y == j) {
-            swappable = true;
+    public void gameWon() {
+        int choice = JOptionPane.showConfirmDialog(null,"Congratulations! New Game?","You won!",JOptionPane.YES_NO_OPTION);
+        if (choice == 0) {
+            removeAll();
+            revalidate();
+            newGame(baseSize,c1,c2);
         } else {
-            swappable = false;
-        }
-    }
-    public void findClickedAndEmpty() {
-        int rowA = 0; int colA = 0; int rowB = 0; int colB = 0;
-        for (int i = 0; i < rows ; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (clickedButton == buttons[i][j]) {
-                    rowA = i;
-                    colA = j;
-                    break;
-                }
-            }
-        }
-        for (int x = 0; x <rows ; x++) {
-            for (int y = 0; y <columns ; y++) {
-                if (buttons[x][y].getText().equals("")){
-                    rowB = x;
-                    colB = y;
-                    break;
-                }
-            }
-        }
-        checkSwappable(rowA,colA,rowB,colB);
-        if (swappable) {
-            swapPlace(rowA,colA,rowB,colB);
-        }
-    }
-    public void swapPlace(int i, int j, int x, int y) {
-        MyButton temp = buttons[i][j];
-        buttons[i][j] = buttons[x][y];
-        buttons[x][y] = temp;
-        revalidate();
-    }
-    public void addButtonsWithNewLocations(){
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                add(buttons[i][j]);
-            }
-        }
-    }
-    public void changeColor(Color c1, Color c2){
-        for (int i = 0; i < rows ; i++) {
-            for (int j = 0; j < columns; j++) {
-                buttons[i][j].setBackgroundColor(c1,c2);
-                if (buttons[i][j].getText().equals("")) {
-                    buttons[i][j].setBackground(Color.black);
-                }
+            int exit = JOptionPane.showConfirmDialog(null,"Exit Game?","Exit?",JOptionPane.YES_NO_OPTION);
+            if (exit == 1) {
+                removeAll();
+                revalidate();
+                newGame(baseSize,c1,c2);
+            } else {
+                System.exit(0);
             }
         }
     }
