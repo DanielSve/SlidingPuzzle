@@ -13,13 +13,17 @@ public class MenuPanel extends JPanel implements ActionListener {
     MenuItems menuItems = new MenuItems(this);
     JMenuItem[] colorMenuItems;
     JMenuItem[] newGameMenuItems;
-    private ActionListener newGameMenuListener;
-    private ActionListener colorMenuListener;
+    ActionListener newGameMenuListener;
+    ActionListener colorMenuListener;
+
 
     public MenuPanel(){
         setLayout(new FlowLayout());
-        newGameMenu = new JMenu("New Game");
-        colorMenu = new JMenu("Change color");
+        newGameMenu = new JMenu("    New Game");
+        colorMenu = new JMenu(" Change color");
+        colorMenu.setPreferredSize(new Dimension(120,20));
+        newGameMenu.setPreferredSize(new Dimension(120,20));
+
         colorMenuBar = new JMenuBar();
         newGameMenuBar = new JMenuBar();
 
@@ -32,7 +36,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         newGameMenuBar.add(newGameMenu);
         colorMenuBar.add(colorMenu);
 
-        add(newGameMenuBar);
+        add(newGameMenuBar,"left");
         add(colorMenuBar);
     }
 

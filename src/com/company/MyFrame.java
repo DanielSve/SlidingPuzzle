@@ -11,6 +11,7 @@ public class MyFrame extends JFrame {
     Colors colors = new Colors();
 
     public MyFrame() {
+        setTitle("Sliding Puzzle");
         setLayout(new BorderLayout());
         menuPanel = new MenuPanel();
         gamePanel = new GamePanel(4,colors.currentColor1,colors.currentColor2);
