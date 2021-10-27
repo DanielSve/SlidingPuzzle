@@ -1,9 +1,16 @@
 package com.company;
 
 import javax.swing.*;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Duration;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAmount;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
@@ -17,6 +24,7 @@ public class GamePanel extends JPanel implements ActionListener {
     int xToSwap = 0;
     int yToSwap = 0;
 
+    Temporal now;
     MyButton[][] buttons;
     ButtonGenerator buttonGenerator;
     JButton clickedButton;
@@ -38,7 +46,11 @@ public class GamePanel extends JPanel implements ActionListener {
         addButtonsWithNewLocations();
         revalidate();
         if (isCorrect()) {
-            gameWon();
+            try {
+                gameWon();
+            } catch (DatatypeConfigurationException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -53,6 +65,7 @@ public class GamePanel extends JPanel implements ActionListener {
         changeColor(c1, c2);
         shuffleButtons();
         addButtonsWithNewLocations();
+        now = LocalTime.now();
     }
 
     public void shuffleButtons() {
@@ -133,8 +146,12 @@ public class GamePanel extends JPanel implements ActionListener {
         return counter == boardSize;
     }
 
-    public void gameWon() {
-        int choice = JOptionPane.showConfirmDialog(null, "Congratulations! New Game?", "You won!", JOptionPane.YES_NO_OPTION);
+    public void gameWon() throws DatatypeConfigurationException {
+
+        Duration elapsedTime = Duration.between(now, LocalTime.now());
+        javax.xml.datatype.Duration elapsed = DatatypeFactory.newInstance().newDuration(String.valueOf(elapsedTime));
+
+        int choice = JOptionPane.showConfirmDialog(null, "Your time was: "+elapsed.getMinutes()+"."+elapsed.getSeconds()+" minutes!\nNew Game?", "Congratulations, You won!", JOptionPane.YES_NO_OPTION);
         if (choice == 0) {
             removeAll();
             revalidate();

@@ -14,7 +14,7 @@ public class MyFrame extends JFrame {
         setTitle("Sliding Puzzle");
         setLayout(new BorderLayout());
         menuPanel = new MenuPanel();
-        gamePanel = new GamePanel(4,colors.currentColor1,colors.currentColor2);
+        gamePanel = new GamePanel(2,colors.currentColor1,colors.currentColor2);
 
         menuPanel.setNewGameMenuListener(new ActionListener() {
             @Override
