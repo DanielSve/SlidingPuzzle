@@ -47,25 +47,15 @@ public class GamePanel extends JPanel implements ActionListener {
         buttons = buttonGenerator.getButtons();
         changeColor(c1,c2);
         shuffleButtons();
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                add(buttons[i][j]);
-            }
-        }
+        addButtonsWithNewLocations();
     }
     public void shuffleButtons() {
         Random rnd = new Random();
         for (int l = 0; l < 1000; l++) {
             int i = rnd.nextInt(baseSize);
             int j = rnd.nextInt(baseSize);
-            for (int x = 0; x < rows; x++) {
-                for (int y = 0; y < columns; y++) {
-                    if (buttons[x][y].getText().equals("")) {
-                        swapIfPossible(i,j,x,y);
-                    }
-                }
-            }
+            findEmpty();
+            swapIfPossible(i,j,xToSwap,yToSwap);
         }
     }
     public void findClicked() {
@@ -92,7 +82,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     public void swapIfPossible(int i, int j, int x, int y) {
         if (x == i && y == j - 1 || x == i && y == j + 1 ||
-                x == i - 1 && y == j || x == i + 1 && y == j) {
+            x == i - 1 && y == j || x == i + 1 && y == j) {
             MyButton temp = buttons[i][j];
             buttons[i][j] = buttons[x][y];
             buttons[x][y] = temp;
