@@ -13,10 +13,6 @@ public class GamePanel extends JPanel implements ActionListener {
     int columns;
     int boardSize;
     int iToSwap = 0; int jToSwap = 0; int xToSwap = 0; int yToSwap = 0;
-    Color myGreen1 = new Color(212,255,225);
-    Color myGreen2 = new Color(123,189,143);
-    Color myBlue1 = new Color(212,245,255);
-    Color myBlue2 = new Color(115,187,209);
 
     MyButton[][] buttons;
     ButtonGenerator buttonGenerator;
