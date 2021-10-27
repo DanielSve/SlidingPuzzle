@@ -108,12 +108,10 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     public boolean isCorrect() {
         int counter = 0;
-        int compare = 1;
         for (int i = 0; i < rows ; i++) {
             for (int j = 0; j < columns; j++) {
-                if (buttons[i][j].getText().equals(Integer.toString(compare))){
+                if (buttons[i][j].getNr() == counter+1) {
                     counter++;
-                    compare++;
                 }
             }
         }
