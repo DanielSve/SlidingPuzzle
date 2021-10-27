@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuPanel extends JPanel implements ActionListener {
+
     JMenu colorMenu;
     JMenu newGameMenu;
     JMenuBar colorMenuBar;
@@ -16,7 +17,7 @@ public class MenuPanel extends JPanel implements ActionListener {
     ActionListener newGameMenuListener;
     ActionListener colorMenuListener;
 
-    public MenuPanel(){
+    public MenuPanel() {
         setLayout(new FlowLayout());
         menuItems = new MenuItems(this);
         newGameMenu = new JMenu("    New Game");

@@ -9,7 +9,7 @@ public class MenuItems {
     JMenuItem[] colorMenuItems;
     JMenuItem[] newGameMenuItems;
 
-    public MenuItems(ActionListener a){
+    public MenuItems(ActionListener a) {
       color1 = new JMenuItem("Yellow");
       color2 = new JMenuItem("Green");
       color3 = new JMenuItem("Blue");

@@ -8,9 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.Duration;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.Temporal;
-import java.time.temporal.TemporalAmount;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
@@ -19,10 +17,10 @@ public class GamePanel extends JPanel implements ActionListener {
     int rows;
     int columns;
     int boardSize;
-    int iToSwap = 0;
-    int jToSwap = 0;
-    int xToSwap = 0;
-    int yToSwap = 0;
+    int iClicked = 0;
+    int jClicked = 0;
+    int iEmpty = 0;
+    int jEmpty = 0;
 
     Temporal now;
     MyButton[][] buttons;
@@ -42,7 +40,7 @@ public class GamePanel extends JPanel implements ActionListener {
         clickedButton = (JButton) e.getSource();
         findClicked();
         findEmpty();
-        swapIfPossible(iToSwap, jToSwap, xToSwap, yToSwap);
+        swapIfPossible(iClicked, jClicked, iEmpty, jEmpty);
         addButtonsWithNewLocations();
         revalidate();
         if (isCorrect()) {
@@ -69,12 +67,12 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void shuffleButtons() {
-        Random rnd = new Random();
-        for (int l = 0; l < 1000; l++) {
-            int i = rnd.nextInt(baseSize);
-            int j = rnd.nextInt(baseSize);
+        Random random = new Random();
+        for (int loop = 0; loop < 1000; loop++) {
+            int iRandom = random.nextInt(baseSize);
+            int jRandom = random.nextInt(baseSize);
             findEmpty();
-            swapIfPossible(i, j, xToSwap, yToSwap);
+            swapIfPossible(iRandom, jRandom, iEmpty, jEmpty);
         }
     }
 
@@ -82,8 +80,8 @@ public class GamePanel extends JPanel implements ActionListener {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (clickedButton == buttons[i][j]) {
-                    iToSwap = i;
-                    jToSwap = j;
+                    iClicked = i;
+                    jClicked = j;
                     break;
                 }
             }
@@ -91,23 +89,23 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void findEmpty() {
-        for (int x = 0; x < rows; x++) {
-            for (int y = 0; y < columns; y++) {
-                if (buttons[x][y].getText().equals("")) {
-                    xToSwap = x;
-                    yToSwap = y;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (buttons[i][j].getText().equals("")) {
+                    iEmpty = i;
+                    jEmpty = j;
                     break;
                 }
             }
         }
     }
 
-    public void swapIfPossible(int i, int j, int x, int y) {
-        if (x == i && y == j - 1 || x == i && y == j + 1 ||
-                x == i - 1 && y == j || x == i + 1 && y == j) {
-            MyButton temp = buttons[i][j];
-            buttons[i][j] = buttons[x][y];
-            buttons[x][y] = temp;
+    public void swapIfPossible(int iClicked, int jClicked, int iEmpty, int jEmpty) {
+        if (iEmpty == iClicked && jEmpty == jClicked - 1 || iEmpty == iClicked && jEmpty == jClicked + 1 ||
+            iEmpty == iClicked - 1 && jEmpty == jClicked || iEmpty == iClicked + 1 && jEmpty == jClicked) {
+            MyButton tempSwap = buttons[iClicked][jClicked];
+            buttons[iClicked][jClicked] = buttons[iEmpty][jEmpty];
+            buttons[iEmpty][jEmpty] = tempSwap;
             revalidate();
         }
     }
