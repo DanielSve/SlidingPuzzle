@@ -13,8 +13,8 @@ public class MenuPanel extends JPanel implements ActionListener {
     MenuItems menuItems = new MenuItems(this);
     JMenuItem[] colorMenuItems;
     JMenuItem[] newGameMenuItems;
-    ActionListener newGameMenuListener;
-    ActionListener colorMenuListener;
+    private ActionListener newGameMenuListener;
+    private ActionListener colorMenuListener;
 
     public MenuPanel(){
         setLayout(new FlowLayout());
