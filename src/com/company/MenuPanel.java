@@ -6,33 +6,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuPanel extends JPanel implements ActionListener {
+
     JMenu colorMenu;
     JMenu newGameMenu;
     JMenuBar colorMenuBar;
     JMenuBar newGameMenuBar;
-    MenuItems menuItems = new MenuItems(this);
+    MenuItems menuItems;
     JMenuItem[] colorMenuItems;
     JMenuItem[] newGameMenuItems;
-    private ActionListener newGameMenuListener;
-    private ActionListener colorMenuListener;
+    ActionListener newGameMenuListener;
+    ActionListener colorMenuListener;
 
-    public MenuPanel(){
+    public MenuPanel() {
         setLayout(new FlowLayout());
-        newGameMenu = new JMenu("New Game");
-        colorMenu = new JMenu("Change color");
+        menuItems = new MenuItems(this);
+        newGameMenu = new JMenu("    New Game");
+        colorMenu = new JMenu(" Change color");
+        colorMenu.setPreferredSize(new Dimension(120,20));
+        newGameMenu.setPreferredSize(new Dimension(120,20));
         colorMenuBar = new JMenuBar();
         newGameMenuBar = new JMenuBar();
 
         newGameMenuItems = menuItems.getNewGameMenuItems();
         colorMenuItems = menuItems.getColorMenuItems();
-        System.out.println(colorMenuItems.length);
         addItemsToMenu(colorMenu, colorMenuItems);
         addItemsToMenu(newGameMenu, newGameMenuItems);
 
         newGameMenuBar.add(newGameMenu);
         colorMenuBar.add(colorMenu);
 
-        add(newGameMenuBar);
+        add(newGameMenuBar,"left");
         add(colorMenuBar);
     }
 
@@ -46,9 +49,12 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == colorMenu.getItem(0) || e.getSource() == colorMenu.getItem(1) || e.getSource() == colorMenu.getItem(2)){
+        if(e.getSource() == colorMenu.getItem(0) || e.getSource() == colorMenu.getItem(1) ||
+                e.getSource() == colorMenu.getItem(2)){
             colorMenuListener.actionPerformed(e);
-        } else if(e.getSource() == newGameMenu.getItem(0) || e.getSource() == newGameMenu.getItem(1) || e.getSource() == newGameMenu.getItem(2)) {
+
+        } else if(e.getSource() == newGameMenu.getItem(0) || e.getSource() == newGameMenu.getItem(1) ||
+                e.getSource() == newGameMenu.getItem(2)) {
             newGameMenuListener.actionPerformed(e);
         }
     }

@@ -8,13 +8,9 @@ public class MyButton extends JButton {
 
     int nr;
 
-    public MyButton(int nr, ActionListener a, Color c1, Color c2){
+    public MyButton(int nr, ActionListener a, Color c1, Color c2) {
         this.nr = nr;
-        if (nr % 2 == 0) {
-            setBackground(c1);
-        } else {
-            setBackground(c2);
-        }
+        setBackgroundColor(c1,c2);
         setBorder(BorderFactory.createLineBorder(Color.black));
         setOpaque(true);
         setPreferredSize(new Dimension(100,100));
