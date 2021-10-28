@@ -18,12 +18,10 @@ public class MenuPanel extends JPanel implements ActionListener {
     ActionListener colorMenuListener;
 
     public MenuPanel() {
-        setLayout(new FlowLayout());
+        setLayout(new GridBagLayout());
         menuItems = new MenuItems(this);
-        newGameMenu = new JMenu("    New Game");
-        colorMenu = new JMenu(" Change color");
-        colorMenu.setPreferredSize(new Dimension(120,20));
-        newGameMenu.setPreferredSize(new Dimension(120,20));
+        newGameMenu = new JMenu("New Puzzle");
+        colorMenu = new JMenu("Color Theme");
         colorMenuBar = new JMenuBar();
         newGameMenuBar = new JMenuBar();
 
@@ -35,8 +33,15 @@ public class MenuPanel extends JPanel implements ActionListener {
         newGameMenuBar.add(newGameMenu);
         colorMenuBar.add(colorMenu);
 
-        add(newGameMenuBar,"left");
-        add(colorMenuBar);
+        GridBagConstraints gc = new GridBagConstraints();
+        gc.fill = GridBagConstraints.LINE_END;
+        gc.gridx = 0;
+        gc.gridy = 0;
+        gc.insets = new Insets(6,10,6,0);
+
+        add(newGameMenuBar,gc);
+        gc.gridx = 1;
+        add(colorMenuBar,gc);
     }
 
     public void setNewGameMenuListener(ActionListener newGameMenuListener) {
