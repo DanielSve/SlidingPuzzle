@@ -16,6 +16,7 @@ public class GamePanel extends JPanel implements ActionListener {
     int iEmpty = 0;
     int jEmpty = 0;
 
+    Colors colors = new Colors();
     GameTimer timer = new GameTimer();
     MyButton[][] buttons;
     ButtonGenerator buttonGenerator;
@@ -114,6 +115,8 @@ public class GamePanel extends JPanel implements ActionListener {
                 buttons[i][j].setBackgroundColor(c1, c2);
                 if (buttons[i][j].getText().equals("")) {
                     buttons[i][j].setBackground(Color.black);
+                    this.c1 = c1;
+                    this.c2 = c2;
                 }
             }
         }
