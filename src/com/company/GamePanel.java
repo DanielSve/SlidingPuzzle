@@ -1,14 +1,9 @@
 package com.company;
 
 import javax.swing.*;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.Duration;
-import java.time.LocalTime;
-import java.time.temporal.Temporal;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
@@ -21,7 +16,7 @@ public class GamePanel extends JPanel implements ActionListener {
     int iEmpty = 0;
     int jEmpty = 0;
 
-    Temporal start;
+    GameTimer timer = new GameTimer();
     MyButton[][] buttons;
     ButtonGenerator buttonGenerator;
     JButton clickedButton;
@@ -58,7 +53,7 @@ public class GamePanel extends JPanel implements ActionListener {
         changeColor(c1, c2);
         shuffleButtons();
         addButtonsWithNewLocations();
-        start = LocalTime.now();
+        timer.startTimer();
     }
 
     public void shuffleButtons() {
@@ -137,10 +132,8 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void gameWon() {
-        try {
-            Duration duration = Duration.between(start, LocalTime.now());
-            javax.xml.datatype.Duration elapsed = DatatypeFactory.newInstance().newDuration(String.valueOf(duration));
-        int choice = JOptionPane.showConfirmDialog(null, "Your time was: "+elapsed.getMinutes()+" minutes and "+elapsed.getSeconds()+" seconds!\nNew Game?", "Congratulations, You won!", JOptionPane.YES_NO_OPTION);
+        String winMessage = timer.stopTimer();
+        int choice = JOptionPane.showConfirmDialog(null, winMessage+"\nNew Game?", "Congratulations, You won!", JOptionPane.YES_NO_OPTION);
         if (choice == 0) {
             removeAll();
             revalidate();
@@ -154,9 +147,6 @@ public class GamePanel extends JPanel implements ActionListener {
             } else {
                 System.exit(0);
             }
-        }
-        } catch (DatatypeConfigurationException e) {
-            e.printStackTrace();
         }
     }
 }
