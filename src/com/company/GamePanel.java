@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements ActionListener {
     int iEmpty = 0;
     int jEmpty = 0;
 
-    Temporal now;
+    Temporal start;
     MyButton[][] buttons;
     ButtonGenerator buttonGenerator;
     JButton clickedButton;
@@ -59,7 +59,7 @@ public class GamePanel extends JPanel implements ActionListener {
         changeColor(c1, c2);
         shuffleButtons();
         addButtonsWithNewLocations();
-        now = LocalTime.now();
+        start = LocalTime.now();
     }
 
     public void shuffleButtons() {
@@ -142,9 +142,10 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void gameWon() {
         try {
-            Duration elapsedTime = Duration.between(now, LocalTime.now());
-            javax.xml.datatype.Duration elapsed = DatatypeFactory.newInstance().newDuration(String.valueOf(elapsedTime));
-        int choice = JOptionPane.showConfirmDialog(null, "Your time was: "+elapsed.getMinutes()+"."+elapsed.getSeconds()+" minutes!\nNew Game?", "Congratulations, You won!", JOptionPane.YES_NO_OPTION);
+            Duration duration = Duration.between(start, LocalTime.now());
+            System.out.println(duration);
+            javax.xml.datatype.Duration elapsed = DatatypeFactory.newInstance().newDuration(String.valueOf(duration));
+        int choice = JOptionPane.showConfirmDialog(null, "Your time was: "+elapsed.getMinutes()+" minutes and "+elapsed.getSeconds()+" seconds!\nNew Game?", "Congratulations, You won!", JOptionPane.YES_NO_OPTION);
         if (choice == 0) {
             removeAll();
             revalidate();
