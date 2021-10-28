@@ -16,7 +16,6 @@ public class GamePanel extends JPanel implements ActionListener {
     int iEmpty = 0;
     int jEmpty = 0;
 
-    Colors colors = new Colors();
     GameTimer timer = new GameTimer();
     MyButton[][] buttons;
     ButtonGenerator buttonGenerator;
