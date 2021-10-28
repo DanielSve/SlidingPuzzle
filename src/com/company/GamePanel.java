@@ -30,6 +30,7 @@ public class GamePanel extends JPanel implements ActionListener {
     Color c2;
 
     public GamePanel(int baseSize, Color c1, Color c2) {
+        setBackground(Color.black);
         this.c1 = c1;
         this.c2 = c2;
         newGame(baseSize, c1, c2);

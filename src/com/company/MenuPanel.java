@@ -37,7 +37,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         gc.fill = GridBagConstraints.LINE_END;
         gc.gridx = 0;
         gc.gridy = 0;
-        gc.insets = new Insets(6,10,6,2);
+        gc.insets = new Insets(6,10,6,0);
 
         add(newGameMenuBar,gc);
         gc.gridx = 1;

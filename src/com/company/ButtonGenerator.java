@@ -16,7 +16,6 @@ public class ButtonGenerator {
             }
         }
         buttonArray[rows-1][columns-1].setText("");
-        buttonArray[rows-1][columns-1].setNr(0);
         buttonArray[rows-1][columns-1].setBackground(Color.black);
     }
 
