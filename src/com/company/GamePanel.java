@@ -135,9 +135,6 @@ public class GamePanel extends JPanel implements ActionListener {
                 }
             }
         }
-        if (buttons[rows - 1][columns - 1].getText().equals("")) {
-            counter++;
-        }
         return counter == boardSize;
     }
 
