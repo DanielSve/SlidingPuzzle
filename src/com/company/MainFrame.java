@@ -26,7 +26,7 @@ public class MainFrame extends JFrame {
             } else if(e.getSource() == menuPanel.newGameMenu.getItem(3)) {
                 gamePanel = new GamePanel(5,5, colors.currentColor1, colors.currentColor2);
             } else if(e.getSource() == menuPanel.newGameMenu.getItem(4)) {
-                gamePanel = new GamePanel(5,8, colors.currentColor1, colors.currentColor2);
+                gamePanel = new GamePanel(3,8, colors.currentColor1, colors.currentColor2);
             }
 
             add(gamePanel);

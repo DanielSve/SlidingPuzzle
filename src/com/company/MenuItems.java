@@ -21,7 +21,7 @@ public class MenuItems {
       newGame2 = new JMenuItem("Size 3 x 3");
       newGame3 = new JMenuItem("Size 4 x 4");
       newGame4 = new JMenuItem("Size 5 x 5");
-      newGame5 = new JMenuItem("Size 5 x 8");
+      newGame5 = new JMenuItem("Size 3 x 8");
 
       newGame1.addActionListener(a);
       newGame2.addActionListener(a);
