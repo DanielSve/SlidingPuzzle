@@ -44,11 +44,7 @@ public class GamePanel extends JPanel implements ActionListener {
         addButtonsWithNewLocations();
         revalidate();
         if (isCorrect()) {
-            try {
-                gameWon();
-            } catch (DatatypeConfigurationException ex) {
-                ex.printStackTrace();
-            }
+            gameWon();
         }
     }
 
@@ -144,11 +140,10 @@ public class GamePanel extends JPanel implements ActionListener {
         return counter == boardSize;
     }
 
-    public void gameWon() throws DatatypeConfigurationException {
-
-        Duration elapsedTime = Duration.between(now, LocalTime.now());
-        javax.xml.datatype.Duration elapsed = DatatypeFactory.newInstance().newDuration(String.valueOf(elapsedTime));
-
+    public void gameWon() {
+        try {
+            Duration elapsedTime = Duration.between(now, LocalTime.now());
+            javax.xml.datatype.Duration elapsed = DatatypeFactory.newInstance().newDuration(String.valueOf(elapsedTime));
         int choice = JOptionPane.showConfirmDialog(null, "Your time was: "+elapsed.getMinutes()+"."+elapsed.getSeconds()+" minutes!\nNew Game?", "Congratulations, You won!", JOptionPane.YES_NO_OPTION);
         if (choice == 0) {
             removeAll();
@@ -163,6 +158,9 @@ public class GamePanel extends JPanel implements ActionListener {
             } else {
                 System.exit(0);
             }
+        }
+        } catch (DatatypeConfigurationException e) {
+            e.printStackTrace();
         }
     }
 }
