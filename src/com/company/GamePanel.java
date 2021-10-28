@@ -58,7 +58,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void shuffleButtons() {
         Random random = new Random();
-        for (int loop = 0; loop < 1000; loop++) {
+        for (int loop = 0; loop < 2000; loop++) {
             int iRandom = random.nextInt(rows);
             int jRandom = random.nextInt(columns);
             findEmpty();
