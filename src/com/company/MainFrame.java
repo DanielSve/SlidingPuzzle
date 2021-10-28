@@ -17,15 +17,12 @@ public class MainFrame extends JFrame {
         menuPanel.setNewGameMenuListener(e -> {
 
             remove(gamePanel);
-            if(e.getSource() == menuPanel.newGameMenu.getItem(0)) {
-                gamePanel = new GamePanel(2,2, colors.currentColor1, colors.currentColor2);
-            } else if(e.getSource() == menuPanel.newGameMenu.getItem(1)){
-                gamePanel = new GamePanel(3,3, colors.currentColor1, colors.currentColor2);
-            } else if(e.getSource() == menuPanel.newGameMenu.getItem(2)) {
-                gamePanel = new GamePanel(4,4, colors.currentColor1, colors.currentColor2);
-            } else if(e.getSource() == menuPanel.newGameMenu.getItem(3)) {
-                gamePanel = new GamePanel(5,5, colors.currentColor1, colors.currentColor2);
-            } else if(e.getSource() == menuPanel.newGameMenu.getItem(4)) {
+            for (int i = 0; i < menuPanel.newGameMenu.getItemCount()-1 ; i++) {
+                if (e.getSource() == menuPanel.newGameMenu.getItem(i)) {
+                    gamePanel = new GamePanel(i + 2, i + 2, colors.currentColor1, colors.currentColor2);
+                }
+            }
+            if(e.getSource() == menuPanel.newGameMenu.getItem(4)) {
                 gamePanel = new GamePanel(3,8, colors.currentColor1, colors.currentColor2);
             }
 
