@@ -13,7 +13,6 @@ import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    int baseSize;
     int rows;
     int columns;
     int boardSize;
@@ -29,11 +28,11 @@ public class GamePanel extends JPanel implements ActionListener {
     Color c1;
     Color c2;
 
-    public GamePanel(int baseSize, Color c1, Color c2) {
+    public GamePanel(int rows, int columns, Color c1, Color c2) {
         setBackground(Color.black);
         this.c1 = c1;
         this.c2 = c2;
-        newGame(baseSize, c1, c2);
+        newGame(rows,columns, c1, c2);
     }
 
     @Override
@@ -49,10 +48,9 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-    public void newGame(int baseSize, Color c1, Color c2) {
-        this.baseSize = baseSize;
-        this.rows = baseSize;
-        this.columns = baseSize;
+    public void newGame(int rows, int columns, Color c1, Color c2) {
+        this.rows = rows;
+        this.columns = columns;
         this.boardSize = this.rows * this.columns;
         setLayout(new GridLayout(rows, columns));
         buttonGenerator = new ButtonGenerator(rows, columns, this);
@@ -66,8 +64,8 @@ public class GamePanel extends JPanel implements ActionListener {
     public void shuffleButtons() {
         Random random = new Random();
         for (int loop = 0; loop < 1000; loop++) {
-            int iRandom = random.nextInt(baseSize);
-            int jRandom = random.nextInt(baseSize);
+            int iRandom = random.nextInt(rows);
+            int jRandom = random.nextInt(columns);
             findEmpty();
             swapIfPossible(iRandom, jRandom, iEmpty, jEmpty);
         }
@@ -141,19 +139,18 @@ public class GamePanel extends JPanel implements ActionListener {
     public void gameWon() {
         try {
             Duration duration = Duration.between(start, LocalTime.now());
-            System.out.println(duration);
             javax.xml.datatype.Duration elapsed = DatatypeFactory.newInstance().newDuration(String.valueOf(duration));
         int choice = JOptionPane.showConfirmDialog(null, "Your time was: "+elapsed.getMinutes()+" minutes and "+elapsed.getSeconds()+" seconds!\nNew Game?", "Congratulations, You won!", JOptionPane.YES_NO_OPTION);
         if (choice == 0) {
             removeAll();
             revalidate();
-            newGame(baseSize, c1, c2);
+            newGame(rows, columns, c1, c2);
         } else {
             int exit = JOptionPane.showConfirmDialog(null, "Exit Game?", "Exit?", JOptionPane.YES_NO_OPTION);
             if (exit == 1) {
                 removeAll();
                 revalidate();
-                newGame(baseSize, c1, c2);
+                newGame(rows, columns, c1, c2);
             } else {
                 System.exit(0);
             }
