@@ -22,5 +22,4 @@ public class ButtonGenerator {
     public MyButton[][] getButtons() {
         return buttonArray;
     }
-
 }

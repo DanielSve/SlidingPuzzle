@@ -9,6 +9,7 @@ public class MyButton extends JButton {
     int nr;
     int row;
     int columns;
+
     public MyButton(int nr, int row, int columns, ActionListener a, Color c1, Color c2) {
         this.nr = nr;
         this.row = row;

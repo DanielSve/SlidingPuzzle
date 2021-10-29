@@ -135,7 +135,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void gameWon() {
         String winMessage = timer.stopTimer();
-        int choice = JOptionPane.showConfirmDialog(null, winMessage+"\nNew Game?", "Congratulations, You won!", JOptionPane.YES_NO_OPTION);
+        int choice = JOptionPane.showConfirmDialog(null, winMessage+"\nNew Game?","Congratulations, You won!", JOptionPane.YES_NO_OPTION);
         if (choice == 0) {
             removeAll();
             revalidate();
